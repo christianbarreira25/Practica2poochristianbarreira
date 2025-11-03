@@ -8,12 +8,13 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 import base64
 import re
+from meshtasticcomunicador import MeshtasticClass
 
 
 class Comunicador:
     def __init__(self, dispositivo):
         self.dispositivo = dispositivo
-
+        self.meshtastic = MeshtasticClass()
         # Debug y opciones base
         self.debug = True
         self.auto_reconnect = True
@@ -36,7 +37,7 @@ class Comunicador:
         self.message_text = "Hola desde el ordenador de Christian"
 
         # Generar nodo y variables
-        random_hex = ''.join(random.choices('0123456789abcdef', k=4))
+        random_hex = "ab70"
         self.node_name = '!abcd' + random_hex
         self.node_number = int(self.node_name.replace("!", ""), 16)
         self.global_message_id = random.getrandbits(32)
@@ -56,6 +57,10 @@ class Comunicador:
         self.client.on_connect = self.on_connect
         self.client.on_disconnect = self.on_disconnect
         self.client.on_message = self.on_message
+
+    def info_nodo(self):
+    # Reenvía la llamada al objeto MeshtasticClass
+        return self.meshtastic.info_nodo()
 
    
     def set_topic(self):
@@ -279,3 +284,4 @@ class Comunicador:
         payload = service_envelope.SerializeToString()
         self.client.publish(self.root_topic + self.channel + "/" + self.node_name, payload)
         print(f"Mensaje enviado: {encoded_message.payload.decode('utf-8', errors='ignore')}")
+

@@ -1,12 +1,13 @@
 import time
 import os
 from comunicador import Comunicador
-from dispositivo import Dispositivo
+from meshtasticcomunicador import MeshtasticClass
+from comunicadorsensores import ComunicadorSensores
 
 class Interfaz:
     def __init__(self):
         # Crear el dispositivo y comunicador
-        self.dispositivo = Dispositivo()
+        self.dispositivo = MeshtasticClass()
         self.comunicacion = Comunicador(self.dispositivo)
 
         # Conectar al servidor MQTT aquí (no en Comunicador.__init__)
@@ -34,26 +35,20 @@ class Interfaz:
             if opcion == "1":
                 msg = input("Mensaje a enviar: ")
                 self.comunicacion.send_message(self.comunicacion.node_number, msg)
-                self.dispositivo.registrar_mensaje(
-                    self.dispositivo.node_name, "broadcast", msg
-                )
+                self.comunicacion.message_text= msg
 
             elif opcion == "2":
                 lat = input("Latitud: ")
                 lon = input("Longitud: ")
                 alt = input("Altitud: ")
                 self.comunicacion.send_position(lat, lon, alt)
-                self.dispositivo.registrar_posicion(lat, lon, alt)
 
             elif opcion == "3":
                 self.comunicacion.send_node_info(self.comunicacion.node_number, False)
 
             elif opcion == "4":
-                print("Escuchando sensores (simulado)...")
-                self.dispositivo.registrar_sensor(
-                    "sensor_virtual", temperatura=22.3, humedad=41.2, presion=1013.7
-                )
-                print("Lectura guardada en sensores.json")
+                print("Esperando mensajes... Presiona Ctrl+C para salir")
+                
 
             elif opcion == "5":
                 os.system("cls" if os.name == "nt" else "clear")
@@ -64,7 +59,7 @@ class Interfaz:
 
             elif opcion == "7":
                 print("Información del nodo:")
-                print(self.dispositivo.info_nodo())
+                print(self.comunicacion.info_nodo())
 
             elif opcion == "0":
                 print("Saliendo del programa...")
