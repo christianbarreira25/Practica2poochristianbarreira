@@ -1,45 +1,37 @@
-# Práctica 1 - Comunicación Mesh con MQTT
+# Proyecto POO – Practica Avanzada
 
-## Descripción del proyecto
+## Introducción
+Este proyecto es una continuación de la práctica 1, en la que hemos trabajado con programación orientada a objetos en Python.  
+En esta versión se aplican conceptos avanzados como **clases abstractas**, **herencia múltiple**, **decoradores**, **programación defensiva** con `try/except`, y **genericidad** usando clases parametrizadas.  
+El proyecto consiste en un sistema de comunicación basado en Meshtastic y MQTT, capaz de enviar y recibir mensajes, posiciones y datos de sensores.
 
-Este proyecto simula una red de comunicación entre nodos utilizando MQTT como protocolo de transporte. Cada nodo puede enviar mensajes cifrados, compartir su posición GPS y registrar datos de sensores ambientales. Toda la información se guarda en archivos JSON para mantener un historial persistente.
+## Objetivos
+- Aplicar conceptos avanzados de POO en un proyecto real.
+- Implementar clases abstractas y herencia múltiple.
+- Usar decoradores (`@staticmethod`, `@property`, `@abstractmethod`) en funciones existentes.
+- Aplicar programación defensiva con `try/except` y excepciones personalizadas.
+- Demostrar la genericidad con una clase `GestorPayload` capaz de manejar distintos tipos de datos.
+- Integrar la comunicación mediante MQTT con sensores y nodos Meshtastic.
 
-El sistema está desarrollado en Python y estructurado en clases para facilitar su mantenimiento y escalabilidad. Se ha probado en entorno local y está preparado para integrarse en redes Mesh reales.
-
-## Requisitos
-
-- Python 3.8 o superior
-- Paquetes necesarios:
-  - meshtastic
-  - paho-mqtt
-  - cryptography
-
--Instalación rápida:
-pip install meshtastic paho-mqtt cryptography
-
-
-## Estructura del proyecto
-
-- `main.py`: punto de entrada del sistema.
-- `interfaz.py`: menú interactivo por consola para el usuario.
-- `comunicador.py`: gestiona la conexión MQTT, el cifrado AES CTR y el envío/recepción de mensajes.
-- `dispositivo.py`: maneja la identidad del nodo y guarda los datos en JSON.
-- `data/`: carpeta donde se almacenan los archivos `mensajes.json`, `gps.json` y `sensores.json`.
-
-## Cómo ejecutar
-
--Desde la terminal, en la raíz del proyecto:
-python main.py
+  ## Estructura del proyecto
+src/
+  comunicador.py # Comunicación con nodos y MQTT
+  meshtasticcomunicador.py # Clase para gestionar Meshtastic
+  comunicadorsensores.py # Lectura de sensores vía MQTT
+  basecomunicador.py # Clase abstracta BaseComunicador
+  seguridadmixin.py # Herencia múltiple para seguridad
+  gestor_payload.py # Clase genérica para manejar datos
+  interfaz.py # Menú de interacción con el usuario
+  main.py #Ejecución del programa principal.
+  
+  ## Requisitos
+- Python 
+- Librerías:
+  - `paho-mqtt`
+  - `cryptography`
+  - `meshtastic`
+ 
+  
 
 
-Una vez iniciado, se mostrará un menú con opciones para enviar mensajes, posiciones, simular sensores, etc.
-
-## Autor
-
-Christian Barreira
-
-## Repositorio
-
-Puedes consultar el código completo en GitHub:
-
-https://github.com/christianbarreira25/Practica1poochristianbarreira
+  
